@@ -1,31 +1,28 @@
 const express = require('express');
 const app = express();
 
-app.use('/home', (req, res) => {
-    res.send('Hello World!');
-});
+//multiple routes
+app.use(
+    "/user",
+    (req, res, next) => {
+        console.log("Handlin the route 1");
+        // res.send("response")
+        next();
+    }, (req, res, next) => {
+        console.log("Handlin the route 2");
+        // res.send("response2")
+        next();
+    }, (req, res, next) => {
+        console.log("Handlin the route 3");
+        res.send("response3")
+        next();
+    }, (req, res, next) => {
+        console.log("Handlin the route 4");
+        // res.send("response4")
+        next();
+    }
+);
 
-app.use('/hero', (req, res) => {
-    res.send('This is hero section!');
-});
-
-app.use('/app', (req, res) => {
-    res.send('This is app section!');
-});
-
-//This will only handle the GET calls to /user
-app.get('/user', (req, res) => {
-    res.send({ firstName: 'Soumya', lastName: 'ranjan' });
-});
-
-app.post('/user', (req, res) => {
-    res.send('data is saved successfully from data base');
-});
-
-app.delete('/user', (req, res) => {
-    res.send('data is deleted successfully from data base');
-});
-
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+app.listen(4000, () => {
+    console.log('Server is running on http://localhost:4000');
 });

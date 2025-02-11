@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     firstName: {
-        type: String
+        type: String,
+        required: true,
+        minLength:8,
+        maxLength:40
     },
     lastName: {
         type: String
@@ -11,14 +14,33 @@ const userSchema = new mongoose.Schema({
         type: Number
     },
     email: {
-        type: String
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true,
+        trim: true
     },
     password: {
-        type: String
+        type: String,
+        required: true,
     },
     gender: {
-        type: String
+        type: String,
+        validate(value){
+            if(!["male","female","others"].includes(value)){
+                throw new Error("Gender data is ot valid");
+            }
+        },
     },
+    about: {
+        type: String,
+        default: "Hey there! I am using devTinder"
+    },
+    skills:{
+        type:[String],
+    }
+},{
+    timestamps: true,
 });
 
 module.exports = mongoose.model('User', userSchema);

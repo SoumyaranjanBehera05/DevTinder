@@ -1,11 +1,9 @@
 const validator = require('validator');
 
 const validateSignupData = (req) => {
-    const { firstName, lastName, email, password } = req.body;
-    if (!firstName || !lastName) {
-        throw new Error("Name is not valid");
-    }
-    else if (!validator.isEmail(email)) {
+    const { firstName, email, password } = req.body;
+
+    if (!validator.isEmail(email)) {
         throw new Error("Email is not valid");
     }
     else if (!validator.isStrongPassword(password)) {
@@ -22,6 +20,7 @@ const validateEditProfileData = (req) => {
         'gender',
         'about',
         'skills',
+        'photoUrl'
     ]
 
     const isEditAllowed = Object.keys(req.body).every((field) => allowedEditFields.includes(field));
@@ -29,4 +28,4 @@ const validateEditProfileData = (req) => {
     return isEditAllowed;
 }
 
-module.exports = { validateSignupData ,validateEditProfileData};
+module.exports = { validateSignupData, validateEditProfileData };
